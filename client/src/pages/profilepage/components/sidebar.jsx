@@ -10,25 +10,20 @@ const BASE = process.env.REACT_APP_API_URL;
 
 function Sidebar() {
   const [user, setUser] = useState({});
-
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const cleanToken = token?.startsWith("Bearer ") ? token : `Bearer ${token}`;
-
         const response = await axios.get(`${BASE}/api/v1/user/details`, {
           headers: {
-            Authorization: cleanToken,
+            Authorization: localStorage.getItem("token"),
           },
         });
-
-        setUser(response.data.user || {});
+        setUser(response.data.user);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
-
     fetchUser();
   }, []);
 
@@ -47,3 +42,16 @@ function Sidebar() {
       </div>
       <div className="contact-info">
         <div className="info-item">
+          <FontAwesomeIcon icon={faEnvelope} />
+          <span>{user.email}</span>
+        </div>
+        <div className="info-item">
+          <FontAwesomeIcon icon={faUniversity} />
+          <span>INDIAN INSTITUTE OF TECHNOLOGY GUWAHATI</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Sidebar;
