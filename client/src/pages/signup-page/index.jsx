@@ -7,7 +7,8 @@ import { SubHeading } from "../../components/SubHeading";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const BASE = process.env.REACT_APP_API_URL;
+//const BASE = process.env.REACT_APP_API_URL;
+const BASE="https://zcoder-isf8.onrender.com";
 console.log("BASE URL:", BASE);
 
 export const Signup = () => {
