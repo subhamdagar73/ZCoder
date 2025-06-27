@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const BASE = process.env.REACT_APP_API_URL;
+console.log("BASE URL:", BASE);
 
 export const Signup = () => {
   const [username, setUsername] = useState("");
