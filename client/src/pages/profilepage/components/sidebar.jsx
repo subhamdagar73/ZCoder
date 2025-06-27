@@ -3,26 +3,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faPen, faUniversity } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-// importing profile page css
 import "./sidebar.css";
-// fetching user data from backend
 import { useEffect, useState } from "react";
+
+const BASE = process.env.REACT_APP_API_URL;
+
 function Sidebar() {
   const [user, setUser] = useState({});
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/user/details", {
+        const token = localStorage.getItem("token");
+        const cleanToken = token?.startsWith("Bearer ") ? token : `Bearer ${token}`;
+
+        const response = await axios.get(`${BASE}/api/v1/user/details`, {
           headers: {
-            Authorization: localStorage.getItem('token'),
+            Authorization: cleanToken,
           },
         });
-        console.log(response.data.user);
-        setUser(response.data.user);
+
+        setUser(response.data.user || {});
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
+
     fetchUser();
   }, []);
 
@@ -41,15 +47,3 @@ function Sidebar() {
       </div>
       <div className="contact-info">
         <div className="info-item">
-          <FontAwesomeIcon icon={faEnvelope} />
-          <span>{user.email}</span>
-        </div>
-        <div className="info-item">
-          <FontAwesomeIcon icon={faUniversity} />
-          <span>INDIAN INSTITUTE OF TECHNOLOGY GUWAHATI</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-export default Sidebar;
