@@ -10,7 +10,7 @@ const BASE = process.env.REACT_APP_API_URL;
 
 function Sidebar() {
   const [user, setUser] = useState({});
-  
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
